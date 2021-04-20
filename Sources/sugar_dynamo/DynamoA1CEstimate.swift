@@ -15,8 +15,8 @@ public struct DynamoA1CEstimate {
     public static let calculationDateKey = DynamoStoreService.sortKey
     public static let valueKey = "value"
     
-    let value: Float
-    let calculationDate: Date
+    public let value: Float
+    public let calculationDate: Date
     
     public init(value: Float, calculationDate: Date){
         self.value = value
