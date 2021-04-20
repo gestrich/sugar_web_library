@@ -45,7 +45,7 @@ public struct DynamoStoreService {
         return db.createTable(tableInput)
     }
     
-    func getItems(partition: String, startSort: String, endSort: String) -> EventLoopFuture<DynamoDB.QueryOutput> {
+    public func getItems(partition: String, startSort: String, endSort: String) -> EventLoopFuture<DynamoDB.QueryOutput> {
         
         return db.query(.init(
             expressionAttributeNames: ["#u" : DynamoStoreService.partitionKey],

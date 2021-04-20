@@ -17,7 +17,7 @@ public struct DynamoNotificationsDisableEvent {
     public static let minutesKey = "minutes"
     
     public let date: Date
-    let minutes: Int
+    public let minutes: Int
     public let triggeringUser: String
     
     
@@ -56,7 +56,7 @@ public struct DynamoNotificationsDisableEvent {
         return DynamoNotificationsDisableEvent(date: dateAsString, minutes: minutes, user: user)
     }
     
-    func userDescription() -> String {
+    public func userDescription() -> String {
         let now = Date()
         let latestDisabledDate = date.adding(minutes: minutes)
         if now < latestDisabledDate {

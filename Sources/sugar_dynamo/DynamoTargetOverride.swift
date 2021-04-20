@@ -17,7 +17,7 @@ public struct DynamoTargetOverride {
     public static let targetBaseKey = "targetBase"
     
     public let date: Date
-    let targetBase: Int
+    public let targetBase: Int
     public let triggeringUser: String
     
     

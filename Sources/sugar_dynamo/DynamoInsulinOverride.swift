@@ -17,7 +17,7 @@ public struct DynamoInsulinOverride {
     public static let insulinPercentKey = "insulinPercent"
     
     public let date: Date
-    let insulinPercent: Int
+    public let insulinPercent: Int
     public let triggeringUser: String
     
     

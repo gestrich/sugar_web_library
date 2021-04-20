@@ -17,10 +17,10 @@ public struct DynamoEGV {
     public static let trendKey = "trend"
     public static let valueKey = "value"
     
-    let trend: Float
-    let value: Int
-    let displayTime: Date
-    let systemTime: Date
+    public let trend: Float
+    public let value: Int
+    public let displayTime: Date
+    public let systemTime: Date
     
     
     public var attributeValues: [String: DynamoDB.AttributeValue] {

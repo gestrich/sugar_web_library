@@ -19,11 +19,11 @@ public struct Utils {
 
 extension Date {
     
-    var iso8601: String {
+    public var iso8601: String {
         Utils.iso8601Formatter.string(from: self)
     }
     
-    func adding(minutes: Int) -> Date {
+    public func adding(minutes: Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: minutes, to: self)!
         
     }
