@@ -18,6 +18,11 @@ public struct DynamoA1CEstimate {
     let value: Float
     let calculationDate: Date
     
+    public init(value: Float, calculationDate: Date){
+        self.value = value
+        self.calculationDate = calculationDate
+    }
+    
     public var attributeValues: [String: DynamoDB.AttributeValue] {
         let dictionary = [
             DynamoA1CEstimate.partitionKey: DynamoDB.AttributeValue(s: String(DynamoA1CEstimate.partitionValue)),
