@@ -22,6 +22,12 @@ public struct DynamoEGV {
     public let displayTime: Date
     public let systemTime: Date
     
+    public init(trend: Float, value: Int, displayTime: Date, systemTime: Date){
+        self.trend = trend
+        self.value = value
+        self.displayTime = displayTime
+        self.systemTime = systemTime
+    }
     
     public var attributeValues: [String: DynamoDB.AttributeValue] {
         var dictionary = [
