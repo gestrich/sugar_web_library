@@ -325,7 +325,7 @@ public struct DynamoStoreService {
 
         return activeInsulinOverride(nowDate: nowDate).flatMap { (fetchedInsulinOverride) in
             insulinOverride = fetchedInsulinOverride
-            return activeTargetOverride(nowDate: nowDate).map { (fetchedTargetOverride) in
+            return self.activeTargetOverride(nowDate: nowDate).map { (fetchedTargetOverride) in
                 targetOverride = fetchedTargetOverride
                 return (insulinOverride, targetOverride)
             }
