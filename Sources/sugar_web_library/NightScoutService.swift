@@ -350,9 +350,9 @@ public struct NightScoutTreatmentJSON: Codable {
 
 public struct NightScoutTreatmentResult {
     
-    let basalEntries: [BasalEntry]
-    let bolusEntries: [BolusEntry]
-    let carbEntries: [CarbEntry]
+    public let basalEntries: [BasalEntry]
+    public let bolusEntries: [BolusEntry]
+    public let carbEntries: [CarbEntry]
 
     static func getTreatmentResult(jsonObjects: [NightScoutTreatmentJSON]) -> NightScoutTreatmentResult {
         var basalEntries = [BasalEntry]()
