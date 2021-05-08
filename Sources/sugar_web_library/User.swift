@@ -12,7 +12,7 @@ public struct User {
     public let phone: String
     public let slackID: String
     
-    init(name: String, phone: String, slackID: String) {
+    public init(name: String, phone: String, slackID: String) {
         self.name = name
         self.phone = phone
         self.slackID = slackID

@@ -18,7 +18,7 @@ public class NightScoutService {
     let secret: String
     let referenceDate: Date
     
-    init(baseURL: String, secret: String, referenceDate: Date){
+    public init(baseURL: String, secret: String, referenceDate: Date){
         self.baseURL = baseURL
         self.secret = secret
         self.referenceDate = referenceDate
@@ -443,7 +443,7 @@ public struct NightScoutCorrectionRange: Codable {
 
 extension Array where Element == NightScoutDeviceStatus {
     
-    func getCurrentPumpStatuses() -> [NightScoutPumpStatus] {
+    public func getCurrentPumpStatuses() -> [NightScoutPumpStatus] {
         var toRet = [NightScoutPumpStatus]()
         
         for nightScoutStatus in self.sortDescending() {
@@ -461,7 +461,7 @@ extension Array where Element == NightScoutDeviceStatus {
         
         return toRet
 }
-    func getCurrentPumpStatusesLessThanUnits(_ units: Float) -> [NightScoutPumpStatus] {
+    public func getCurrentPumpStatusesLessThanUnits(_ units: Float) -> [NightScoutPumpStatus] {
         var descendingEvents = getCurrentPumpStatuses().sortDescending()
         descendingEvents.removeLast(10) //After pump change the units are inaccurate for 20 minutes or so.
         return descendingEvents.filter { status in
@@ -473,7 +473,7 @@ extension Array where Element == NightScoutDeviceStatus {
         }
     }
     
-    func estimatedPumpUnits(referenceDate: Date) -> Float {
+    public func estimatedPumpUnits(referenceDate: Date) -> Float {
         if let reservoir = getCurrentPumpStatusesLessThanUnits(50).sortDescending().first?.reservoir {
             return reservoir
         } else {
