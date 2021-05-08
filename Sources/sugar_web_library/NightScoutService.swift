@@ -377,12 +377,12 @@ public struct NightScoutTreatmentResult {
 
 public struct NightScoutDeviceStatus: Codable, SugarEvent {
     
-    let _id: String
-    let created_at: Date
-    let loop: NightScoutLoopStatus?
-    let pump: NightScoutPumpStatus?
-    let uploader: NightScoutUploaderStatus?
-    let override: NightScoutOverride?
+    public let _id: String
+    public let created_at: Date
+    public let loop: NightScoutLoopStatus?
+    public let pump: NightScoutPumpStatus?
+    public let uploader: NightScoutUploaderStatus?
+    public let override: NightScoutOverride?
     
     public var date: Date {
         get {
@@ -397,10 +397,10 @@ public struct NightScoutDeviceStatus: Codable, SugarEvent {
 }
 
 public struct NightScoutPumpStatus: Codable, SugarEvent {
-    let clock: Date
-    let reservoir: Float?
-    let suspended: Bool
-    let pumpID: String
+    public let clock: Date
+    public let reservoir: Float?
+    public let suspended: Bool
+    public let pumpID: String
     
     public var date: Date {
         get {
@@ -416,29 +416,29 @@ public struct NightScoutPumpStatus: Codable, SugarEvent {
 
 
 public struct NightScoutLoopStatus: Codable {
-    let timestamp: Date
-    let name: String
-    let version: String
-    let recommendedBolus: Float?
+    public let timestamp: Date
+    public let name: String
+    public let version: String
+    public let recommendedBolus: Float?
 }
 
 public struct NightScoutUploaderStatus: Codable {
-    let timestamp: Date
-    let battery: Int
-    let name: String
+    public let timestamp: Date
+    public let battery: Int
+    public let name: String
 }
 
 public struct NightScoutOverride: Codable {
-    let name: String?
-    let timestamp: Date
-    let active: Bool
-    let multiplier: Float?
-    let currentCorrectionRange: NightScoutCorrectionRange?
+    public let name: String?
+    public let timestamp: Date
+    public let active: Bool
+    public let multiplier: Float?
+    public let currentCorrectionRange: NightScoutCorrectionRange?
 }
 
 public struct NightScoutCorrectionRange: Codable {
-    let minValue: Int
-    let maxValue: Int
+    public let minValue: Int
+    public let maxValue: Int
 }
 
 extension Array where Element == NightScoutDeviceStatus {
