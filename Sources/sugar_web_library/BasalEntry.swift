@@ -16,7 +16,7 @@ public struct BasalEntry {
 
 extension BasalEntry: SugarEvent {
     
-    func inlineDescription() -> String {
+    public func inlineDescription() -> String {
         return "\(dateDescription()) Basal \(self.rate)"
     }
 }

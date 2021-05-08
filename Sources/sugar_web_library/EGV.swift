@@ -50,11 +50,11 @@ public struct EGV {
 
 extension EGV: SugarEvent {
     
-    var date: Date {
+    public var date: Date {
         return self.systemTime
     }
     
-    func inlineDescription() -> String {
+    public func inlineDescription() -> String {
         return "\(dateDescription()) EGV \(self.value)"
     }
 }

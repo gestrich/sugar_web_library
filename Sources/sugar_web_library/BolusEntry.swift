@@ -14,7 +14,7 @@ public struct BolusEntry {
 
 extension BolusEntry: SugarEvent {
     
-    func inlineDescription() -> String {
+    public func inlineDescription() -> String {
         return "\(dateDescription()) Bolus \(self.amount)"
     }
 }

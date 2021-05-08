@@ -14,7 +14,7 @@ public struct CarbEntry {
 
 extension CarbEntry: SugarEvent {
     
-    func inlineDescription() -> String {
+    public func inlineDescription() -> String {
         return "\(dateDescription()) Carb \(self.amount)"
     }
 }

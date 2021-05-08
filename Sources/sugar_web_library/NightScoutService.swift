@@ -384,13 +384,13 @@ public struct NightScoutDeviceStatus: Codable, SugarEvent {
     let uploader: NightScoutUploaderStatus?
     let override: NightScoutOverride?
     
-    var date: Date {
+    public var date: Date {
         get {
             return created_at
         }
     }
     
-    func inlineDescription() -> String {
+    public func inlineDescription() -> String {
         //TODO: Implement this
         return ""
     }
@@ -402,13 +402,13 @@ public struct NightScoutPumpStatus: Codable, SugarEvent {
     let suspended: Bool
     let pumpID: String
     
-    var date: Date {
+    public var date: Date {
         get {
             return clock
         }
     }
     
-    func inlineDescription() -> String {
+    public func inlineDescription() -> String {
         //TODO: Implement this
         return ""
     }

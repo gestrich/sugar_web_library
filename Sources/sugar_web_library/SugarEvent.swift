@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol SugarEvent {
+public protocol SugarEvent {
     var date: Date { get }
     func inlineDescription() -> String
     
 }
 
-extension SugarEvent {
+public extension SugarEvent {
     func dateDescription() -> String {
         // *** create calendar object ***
         var calendar = Calendar.current
@@ -33,29 +33,29 @@ extension SugarEvent {
 
 }
 
-extension Array where Element: SugarEvent {
+public extension Array where Element: SugarEvent {
     
-    func sortDescending() -> [Element] {
+    public func sortDescending() -> [Element] {
         
         return self.sorted { (event1, event2) -> Bool in
             return event1.date > event2.date
         }
     }
     
-    func sortAscending() -> [Element] {
+    public func sortAscending() -> [Element] {
         
         return self.sorted { (event1, event2) -> Bool in
             return event1.date < event2.date
         }
     }
     
-    func eventsSince(_ oldestDate: Date, referenceDate: Date) -> [Element] {
+    public func eventsSince(_ oldestDate: Date, referenceDate: Date) -> [Element] {
         return self.filter { (event) -> Bool in
             return event.date < referenceDate && event.date >= oldestDate
         }
     }
     
-    func eventsInPastMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
+    public func eventsInPastMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
         
         return self.filter { (event) -> Bool in
             let interval = referenceDate.timeIntervalSince(event.date)
@@ -66,14 +66,14 @@ extension Array where Element: SugarEvent {
         }
     }
     
-    func eventsWithinUpcomingMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
+    public func eventsWithinUpcomingMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
         return self.filter { (event) -> Bool in
             let interval = event.date.timeIntervalSince(referenceDate)
             return interval > 0 && interval <= TimeInterval(minutes * 60)
         }
     }
     
-    func eventsAfterUpcomingMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
+    public func eventsAfterUpcomingMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
         return self.filter { (event) -> Bool in
             let interval = event.date.timeIntervalSince(referenceDate)
             return interval >= TimeInterval(minutes * 60)
