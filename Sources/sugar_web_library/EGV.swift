@@ -61,7 +61,7 @@ extension EGV: SugarEvent {
 
 extension Array where Element == EGV {
     
-    func calculateA1C() -> Float? {
+    public func calculateA1C() -> Float? {
         
         guard self.count > 0 else {
             return nil
