@@ -7,6 +7,7 @@
 
 import Foundation
 import DynamoDB
+import sugar_utils
 
 public struct DynamoEGV {
     

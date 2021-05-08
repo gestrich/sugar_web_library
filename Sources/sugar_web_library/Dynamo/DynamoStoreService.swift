@@ -8,6 +8,7 @@
 import Foundation
 import NIO
 import DynamoDB
+import sugar_utils
 
 public struct DynamoStoreService {
     
