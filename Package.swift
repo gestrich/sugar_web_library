@@ -4,15 +4,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "sugar_library",
+    name: "sugar_web_library",
     platforms: [
         .macOS(.v10_15)
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "sugar_library",
-            targets: ["sugar_library"]),
+            name: "sugar_web_library",
+            targets: ["sugar_web_library"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -25,15 +25,16 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "sugar_library",
+            name: "sugar_web_library",
             dependencies: [
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),
                 .product(name: "Crypto", package: "swift-crypto"),
                 .product(name: "sugar_utils", package: "sugar_utils"),
+                .product(name: "DynamoDB", package: "AWSSDKSwift"),
             ]),
         .testTarget(
-            name: "sugar_libraryTests",
-            dependencies: ["sugar_library"]),
+            name: "sugar_web_libraryTests",
+            dependencies: ["sugar_web_library"]),
     ]
 )
 
