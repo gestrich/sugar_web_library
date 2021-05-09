@@ -35,27 +35,27 @@ public extension SugarEvent {
 
 public extension Array where Element: SugarEvent {
     
-    public func sortDescending() -> [Element] {
+    func sortDescending() -> [Element] {
         
         return self.sorted { (event1, event2) -> Bool in
             return event1.date > event2.date
         }
     }
     
-    public func sortAscending() -> [Element] {
+    func sortAscending() -> [Element] {
         
         return self.sorted { (event1, event2) -> Bool in
             return event1.date < event2.date
         }
     }
     
-    public func eventsSince(_ oldestDate: Date, referenceDate: Date) -> [Element] {
+    func eventsSince(_ oldestDate: Date, referenceDate: Date) -> [Element] {
         return self.filter { (event) -> Bool in
             return event.date < referenceDate && event.date >= oldestDate
         }
     }
     
-    public func eventsInPastMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
+    func eventsInPastMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
         
         return self.filter { (event) -> Bool in
             let interval = referenceDate.timeIntervalSince(event.date)
@@ -66,14 +66,14 @@ public extension Array where Element: SugarEvent {
         }
     }
     
-    public func eventsWithinUpcomingMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
+    func eventsWithinUpcomingMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
         return self.filter { (event) -> Bool in
             let interval = event.date.timeIntervalSince(referenceDate)
             return interval > 0 && interval <= TimeInterval(minutes * 60)
         }
     }
     
-    public func eventsAfterUpcomingMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
+    func eventsAfterUpcomingMinutes(_ minutes: Int, referenceDate: Date) -> [Element] {
         return self.filter { (event) -> Bool in
             let interval = event.date.timeIntervalSince(referenceDate)
             return interval >= TimeInterval(minutes * 60)
