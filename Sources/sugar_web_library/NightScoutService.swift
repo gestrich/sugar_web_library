@@ -415,7 +415,7 @@ public struct NightScoutPumpStatus: Codable, SugarEvent {
     }
     
     func getValidReservoir(pumpChangeDate: Date) -> Float? {
-        guard pumpChangeDate < clock else {
+        guard pumpChangeDate <= clock else {
             assert(false, "Undefined - passing pump change date after this one")
             //
             return nil
