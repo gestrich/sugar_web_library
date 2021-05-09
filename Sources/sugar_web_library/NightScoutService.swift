@@ -408,9 +408,29 @@ public struct NightScoutPumpStatus: Codable, SugarEvent {
         }
     }
     
+    //SugarEvent Conformance
     public func inlineDescription() -> String {
         //TODO: Implement this
         return ""
+    }
+    
+    func getValidReservoir(pumpChangeDate: Date) -> Float? {
+        guard pumpChangeDate < clock else {
+            assert(false, "Undefined - passing pump change date after this one")
+            //
+            return nil
+        }
+        
+        guard let reservoir = reservoir else {
+            return nil
+        }
+        
+        if reservoir < 50 && clock.timeIntervalSince(pumpChangeDate) < 60 * 60 {
+            //Pump values sometimes invalid right after pump change so we ignore them
+            return 50
+        }
+        
+        return reservoir
     }
 }
 
@@ -460,12 +480,17 @@ extension Array where Element == NightScoutDeviceStatus {
         }
         
         return toRet
-}
+    }
+    
     public func getCurrentPumpStatusesLessThanUnits(_ units: Float) -> [NightScoutPumpStatus] {
-        var descendingEvents = getCurrentPumpStatuses().sortDescending()
-        descendingEvents.removeLast(10) //After pump change the units are inaccurate for 20 minutes or so.
+        let descendingEvents = getCurrentPumpStatuses().sortDescending()
+        
+        guard let pumpChangeDate = descendingEvents.last?.clock else {
+            return []
+        }
+        
         return descendingEvents.filter { status in
-            if let reservoir = status.reservoir {
+            if let reservoir = status.getValidReservoir(pumpChangeDate: pumpChangeDate) {
                 return reservoir < units
             } else {
                 return false
