@@ -36,7 +36,7 @@ public struct SugarState {
         case .low:
             return 0
         case .medium:
-            return 20 * 60
+            return 25 * 60
         case .high:
             return 10 * 60
         }
@@ -59,10 +59,11 @@ public struct SugarState {
 
 public enum SugarStateType: String {
     case sugarUnder60
-    case sugar60to70
-    case sugar70to80
-    case sugar80to90
-    case sugar90to100
+    case sugar60to100
+//    case sugar60to70
+//    case sugar70to80
+//    case sugar80to90
+//    case sugar90to100
     case sugarNormal
     case sugar200to300
     case sugarOver300
