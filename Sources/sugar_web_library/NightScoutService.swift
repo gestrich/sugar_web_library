@@ -338,7 +338,9 @@ public struct NightScoutTreatmentJSON: Codable {
     }
     
     func carbEntry() -> CarbEntry? {
-        guard eventType == "Meal Bolus" else {
+        
+        //guard eventType == "Meal Bolus" else { //Loop master seems to give a different value than dev
+        guard eventType == "Carb Correction" else { //dev
             return nil
         }
         
