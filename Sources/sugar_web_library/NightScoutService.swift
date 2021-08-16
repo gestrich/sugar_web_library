@@ -66,7 +66,8 @@ public class NightScoutService {
             }
             
 //            return entries.map({$0.toEGV()})
-            return entries.filter({$0.device != "CGMBLEKit Dexcom G6 21.0"}).map({$0.toEGV()})
+            //Remove "0" readings
+            return entries.filter({$0.device != "CGMBLEKit Dexcom G6 21.0"}).map({$0.toEGV()}).filter({$0.value > 0})
         }
     }
     
