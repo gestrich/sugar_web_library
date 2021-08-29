@@ -33,19 +33,6 @@ public struct EGV {
     public func simpleDescription() ->  String {
         return "\(value)"
     }
-    
-    public func displayDateDescription() -> String {
-        let dateFormatterPrint = DateFormatter()
-        dateFormatterPrint.timeZone = TimeZone(identifier: "EST")
-        dateFormatterPrint.dateFormat = "h:mm a"
-        return dateFormatterPrint.string(from: displayTime)
-    }
-    
-    public func fullDescription() -> String {
-        var toRet = "\(simpleDescription()), "
-        toRet += displayDateDescription()
-        return toRet
-    }
 }
 
 extension EGV: SugarEvent {
