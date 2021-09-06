@@ -65,8 +65,16 @@ public class NightScoutService {
                 print(error)
             }
             
-//            return entries.map({$0.toEGV()})
-            //Remove "0" readings
+            /*
+             Device Types:
+                "loop://iPhone"
+                    I believe it is just from reading sugar via Bluetooth interecpts
+                    This lacks the trend information.
+                "share2"
+                    I believe this comes from Dexcom credentials being input to Loop
+                "CGMBLEKit Dexcom G6 21.0"
+                    Haven't seen this one for a while -- not sure if still a factor
+             */
             return entries.filter({$0.device != "CGMBLEKit Dexcom G6 21.0"}).map({$0.toEGV()}).filter({$0.value > 0})
         }
     }
