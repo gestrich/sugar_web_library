@@ -402,5 +402,40 @@ public struct DynamoStoreService {
             return sensorInventories.last
         }
     }
+    
+    
+    //MARK: Pod Inventory
+    
+    public func storePodInventory(_ podInventory: DynamoPodInventory) -> EventLoopFuture<DynamoPodInventory> {
+        let input = DynamoDB.PutItemInput(item: podInventory.attributeValues, tableName: tableName)
+        return db.putItem(input).map { (_) -> DynamoPodInventory in
+            podInventory
+        }
+    }
+    
+    public func getPodInventoriesSinceDate(oldestDate: Date, latestDate: Date) -> EventLoopFuture<[DynamoPodInventory]> {
+        
+        let oldestDateAsString = Utils.iso8601Formatter.string(from: oldestDate)
+        let currentDateAsString = Utils.iso8601Formatter.string(from: latestDate)
+        
+        return getItems(partition: DynamoPodInventory.partitionValue, startSort: oldestDateAsString, endSort: currentDateAsString).map { (output) -> [DynamoPodInventory] in
+            return output.items?.compactMap({ (dict) -> DynamoPodInventory? in
+                return DynamoPodInventory.podInventoryWith(dictionary: dict)
+            }) ?? []
+        }
+    }
+    
+    public func getPodInventoriesInPastMinutes(_ minutes: Int, referenceDate: Date) -> EventLoopFuture<[DynamoPodInventory]> {
+        let interval = TimeInterval(minutes) * -60
+        let date = referenceDate.addingTimeInterval(interval)
+        return self.getPodInventoriesSinceDate(oldestDate: date, latestDate: referenceDate)
+    }
+    
+    public func getLatestPodInventory(referenceDate: Date) -> EventLoopFuture<DynamoPodInventory?> {
+        //Support last 60 days.
+        self.getPodInventoriesInPastMinutes(60 * 24 * 60, referenceDate: referenceDate).map { (podInventories) -> DynamoPodInventory? in
+            return podInventories.last
+        }
+    }
 
 }
