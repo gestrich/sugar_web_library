@@ -332,5 +332,39 @@ public struct DynamoStoreService {
             }
         }
     }
+    
+    
+    //MARK: Sensor Change
+    
+    public func storeSensorChange(_ sensorChange: DynamoSensorChange) -> EventLoopFuture<DynamoSensorChange> {
+        let input = DynamoDB.PutItemInput(item: sensorChange.attributeValues, tableName: tableName)
+        return db.putItem(input).map { (_) -> DynamoSensorChange in
+            sensorChange
+        }
+    }
+    
+    public func getSensorChangesSinceDate(oldestDate: Date, latestDate: Date) -> EventLoopFuture<[DynamoSensorChange]> {
+        
+        let oldestDateAsString = Utils.iso8601Formatter.string(from: oldestDate)
+        let currentDateAsString = Utils.iso8601Formatter.string(from: latestDate)
+        
+        return getItems(partition: DynamoSensorChange.partitionValue, startSort: oldestDateAsString, endSort: currentDateAsString).map { (output) -> [DynamoSensorChange] in
+            return output.items?.compactMap({ (dict) -> DynamoSensorChange? in
+                return DynamoSensorChange.sensorChangeWith(dictionary: dict)
+            }) ?? []
+        }
+    }
+    
+    public func getSensorChangesInPastMinutes(_ minutes: Int, referenceDate: Date) -> EventLoopFuture<[DynamoSensorChange]> {
+        let interval = TimeInterval(minutes) * -60
+        let date = referenceDate.addingTimeInterval(interval)
+        return self.getSensorChangesSinceDate(oldestDate: date, latestDate: referenceDate)
+    }
+    
+    public func getLatestSensorChange(referenceDate: Date) -> EventLoopFuture<DynamoSensorChange?> {
+        self.getSensorChangesInPastMinutes(60 * 24, referenceDate: referenceDate).map { (sensorChanges) -> DynamoSensorChange? in
+            return sensorChanges.last
+        }
+    }
 
 }
