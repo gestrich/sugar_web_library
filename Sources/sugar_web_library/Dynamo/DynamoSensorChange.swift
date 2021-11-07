@@ -14,20 +14,16 @@ public struct DynamoSensorChange {
     public static let partitionKey = DynamoStoreService.partitionKey
     public static let partitionValue: String = "SensorChange"
     public static let changeDateKey = DynamoStoreService.sortKey
-    public static let inventoryCountKey = "inventoryCount"
     
-    public let inventoryCount: Int
     public let changeDate: Date
     
-    public init(inventoryCount: Int, changeDate: Date){
-        self.inventoryCount = inventoryCount
+    public init(changeDate: Date){
         self.changeDate = changeDate
     }
     
     public var attributeValues: [String: DynamoDB.AttributeValue] {
         let dictionary = [
             DynamoSensorChange.partitionKey: DynamoDB.AttributeValue(s: String(DynamoSensorChange.partitionValue)),
-            DynamoSensorChange.inventoryCountKey: DynamoDB.AttributeValue(n: String(inventoryCount)),
             DynamoSensorChange.changeDateKey: DynamoDB.AttributeValue(s: Utils.iso8601Formatter.string(from: changeDate))
         ]
         
@@ -40,10 +36,6 @@ public struct DynamoSensorChange {
             return nil
         }
         
-        guard let inventoryCountString = dictionary[DynamoSensorChange.inventoryCountKey]?.n, let inventoryCount = Int(inventoryCountString) else {
-            return nil
-        }
-        
-        return DynamoSensorChange(inventoryCount: inventoryCount, changeDate: changeDate)
+        return DynamoSensorChange(changeDate: changeDate)
     }
 }

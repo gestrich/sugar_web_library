@@ -366,5 +366,39 @@ public struct DynamoStoreService {
             return sensorChanges.last
         }
     }
+    
+    
+    //MARK: Sensor Inventory
+    
+    public func storeSensorInventory(_ sensorInventory: DynamoSensorInventory) -> EventLoopFuture<DynamoSensorInventory> {
+        let input = DynamoDB.PutItemInput(item: sensorInventory.attributeValues, tableName: tableName)
+        return db.putItem(input).map { (_) -> DynamoSensorInventory in
+            sensorInventory
+        }
+    }
+    
+    public func getSensorInventoriesSinceDate(oldestDate: Date, latestDate: Date) -> EventLoopFuture<[DynamoSensorInventory]> {
+        
+        let oldestDateAsString = Utils.iso8601Formatter.string(from: oldestDate)
+        let currentDateAsString = Utils.iso8601Formatter.string(from: latestDate)
+        
+        return getItems(partition: DynamoSensorInventory.partitionValue, startSort: oldestDateAsString, endSort: currentDateAsString).map { (output) -> [DynamoSensorInventory] in
+            return output.items?.compactMap({ (dict) -> DynamoSensorInventory? in
+                return DynamoSensorInventory.sensorInventoryWith(dictionary: dict)
+            }) ?? []
+        }
+    }
+    
+    public func getSensorInventoriesInPastMinutes(_ minutes: Int, referenceDate: Date) -> EventLoopFuture<[DynamoSensorInventory]> {
+        let interval = TimeInterval(minutes) * -60
+        let date = referenceDate.addingTimeInterval(interval)
+        return self.getSensorInventoriesSinceDate(oldestDate: date, latestDate: referenceDate)
+    }
+    
+    public func getLatestSensorInventory(referenceDate: Date) -> EventLoopFuture<DynamoSensorInventory?> {
+        self.getSensorInventoriesInPastMinutes(60 * 24, referenceDate: referenceDate).map { (sensorInventories) -> DynamoSensorInventory? in
+            return sensorInventories.last
+        }
+    }
 
 }
