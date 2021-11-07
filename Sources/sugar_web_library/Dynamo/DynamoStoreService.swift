@@ -362,7 +362,8 @@ public struct DynamoStoreService {
     }
     
     public func getLatestSensorChange(referenceDate: Date) -> EventLoopFuture<DynamoSensorChange?> {
-        self.getSensorChangesInPastMinutes(60 * 24, referenceDate: referenceDate).map { (sensorChanges) -> DynamoSensorChange? in
+        //Support last 60 days.
+        self.getSensorChangesInPastMinutes(60 * 24 * 60, referenceDate: referenceDate).map { (sensorChanges) -> DynamoSensorChange? in
             return sensorChanges.last
         }
     }
@@ -396,7 +397,8 @@ public struct DynamoStoreService {
     }
     
     public func getLatestSensorInventory(referenceDate: Date) -> EventLoopFuture<DynamoSensorInventory?> {
-        self.getSensorInventoriesInPastMinutes(60 * 24, referenceDate: referenceDate).map { (sensorInventories) -> DynamoSensorInventory? in
+        //Support last 60 days.
+        self.getSensorInventoriesInPastMinutes(60 * 24 * 60, referenceDate: referenceDate).map { (sensorInventories) -> DynamoSensorInventory? in
             return sensorInventories.last
         }
     }
